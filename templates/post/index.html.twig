@@ -7,28 +7,43 @@
 <div class="container mt-4">
     <h1 class="mb-4">Posts</h1>
 
+    {# Vérifie si la liste des posts est vide #}
     {% if posts is empty %}
         <p class="text-muted">No posts available.</p>
     {% else %}
         <div class="row">
+            {# Boucle sur chaque post pour l'afficher #}
             {% for post in posts %}
                 <div class="col-md-6 mb-4">
                     <div class="card">
                         <div class="card-body">
+                            {# Affiche le titre du post #}
                             <h2 class="card-title">{{ post.title }}</h2>
-                            <p class="card-text">{{ post.content|length > 150 ? post.content|slice(0, 150) ~ '...' : post.content }}</p>
+
+                            {# Affiche le contenu du post, tronqué à 150 caractères si nécessaire #}
+                            <p class="card-text">
+                                {{ post.content|length > 150 ? post.content|slice(0, 150) ~ '...' : post.content }}
+                            </p>
+
+                            {# Affiche la date de publication et l'auteur du post #}
                             <p class="text-muted">
                                 <small>Published on : {{ post.createdAt|date('Y-m-d H:i') }} by <strong>{{ post.author.pseudo }}</strong></small>
                             </p>
+
+                            {# Affiche le nombre de commentaires associés au post #}
                             <p class="text-muted">
                                 <small>{{ post.comments | length }} comments</small>
                             </p>
 
+                            {# Lien vers la page de détail du post #}
                             <a href="{{ path('show_post', {'id': post.id}) }}" class="btn btn-primary btn-sm">Show</a>
 
+                            {# Vérifie si l'utilisateur connecté a le droit d'éditer le post #}
                             {% if app.user and is_granted('POST_EDIT', post) %}
                                 <a href="#" class="btn btn-warning btn-sm">Edit</a>
                             {% endif %}
+
+                            {# Vérifie si l'utilisateur connecté a le droit de supprimer le post #}
                             {% if app.user and is_granted('POST_DELETE', post) %}
                                 <a href="#" class="btn btn-danger btn-sm">Delete</a>
                             {% endif %}

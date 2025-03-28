@@ -5,38 +5,52 @@
 {% block body %}
 
 <div class="container mt-4">
+    {# Lien pour revenir à la liste des posts #}
     <a href="{{ path('app_post') }}" class="btn btn-secondary mb-3">← Back to posts</a>
 
     <div class="card">
         <div class="card-body">
+            {# Affiche le titre et le contenu du post #}
             <h1 class="card-title">{{ post.title }}</h1>
             <p class="card-text">{{ post.content }}</p>
+            
+            {# Affiche la date de publication et l'auteur du post #}
             <p class="text-muted">
                 <small>Published on : {{ post.createdAt|date('Y-m-d H:i') }} by <strong>{{ post.author.pseudo }}</strong></small>
             </p>
         </div>
     </div>
 
+    {# Affiche le titre des commentaires avec le nombre de commentaires associés au post #}
     <h3 class="mt-4">Comments ({{ post.comments|length }})</h3>
 
+    {# Trie les commentaires par date de création, du plus ancien au plus récent #}
     {% set sorted_comments = post.comments|sort((comment) => -comment.createdAt|date('U')) %}
 
+    {# Boucle pour afficher chaque commentaire trié #}
     {% for comment in sorted_comments %}
         <div class="card mt-3">
             <div class="card-body">
+                {# Affiche le pseudo de l'auteur du commentaire #}
                 <h5 class="card-title">{{ comment.author.pseudo }}</h5>
+                
+                {# Affiche le contenu du commentaire #}
                 <p class="card-text">{{ comment.content }}</p>
+                
+                {# Affiche la date de publication du commentaire #}
                 <p class="text-muted">
                     <small>Posted on: {{ comment.createdAt|date('Y-m-d H:i') }}</small>
                 </p>
 
+                {# Vérifie si l'utilisateur connecté a le droit de supprimer ce commentaire #}
                 {% if app.user and is_granted('COMMENT_DELETE', comment) %}
                     <a href="#" class="btn btn-danger btn-sm">Delete</a>
                 {% endif %}
             </div>
         </div>
     {% else %}
-        <p class="text-muted">No comments yet. Be the first to comment !</p>
+        {# Si aucun commentaire n'est présent, affiche un message indiquant qu'il n'y a pas encore de commentaire #}
+        <p class="text-muted">No comments yet. Be the first to comment!</p>
     {% endfor %}
 </div>
 
