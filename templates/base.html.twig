@@ -11,9 +11,11 @@
 
     </head>
     <body>
-        <main class="container mt-4">
-            <p>User connected : {{ app.user.email ~ ' ' ~ app.user.pseudo }}</p>
-            {% block body %}{% endblock %}
+        <main class="mh-100">
+            <section class="container p-3">
+                <p class="">User connected : {{ app.user.email ~ ' ' ~ app.user.pseudo }}</p>
+                {% block body %}{% endblock %}
+            </section>
         </main>
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
