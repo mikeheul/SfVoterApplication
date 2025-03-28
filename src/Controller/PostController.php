@@ -17,7 +17,7 @@ final class PostController extends AbstractController
     #[Route('/post', name: 'app_post')]
     public function index(PostRepository $pr, UserRepository $ur, Security $security, TokenStorageInterface $tokenStorage): Response
     {
-        $user = $ur->find(1);
+        $user = $ur->find(6);
 
         if ($user) {
             $token = new UsernamePasswordToken($user, 'main', $user->getRoles());
@@ -33,7 +33,7 @@ final class PostController extends AbstractController
     #[Route('/post/{id}', name: 'show_post')]
     public function show(Post $post, UserRepository $ur, Security $security, TokenStorageInterface $tokenStorage): Response
     {
-        $user = $ur->find(1);
+        $user = $ur->find(6);
         
         if ($user) {
             $token = new UsernamePasswordToken($user, 'main', $user->getRoles());
