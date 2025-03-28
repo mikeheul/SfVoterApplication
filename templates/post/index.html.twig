@@ -5,7 +5,7 @@
 {% block body %}
 
 <div class="container mt-4">
-    <h1 class="mb-4">Posts</h1>
+    <h1 class="mb-4">Posts ({{ posts | length }})</h1>
 
     {# Vérifie si la liste des posts est vide #}
     {% if posts is empty %}
