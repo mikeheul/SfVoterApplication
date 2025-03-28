@@ -12,20 +12,22 @@
             <h1 class="card-title">{{ post.title }}</h1>
             <p class="card-text">{{ post.content }}</p>
             <p class="text-muted">
-                <small>Published on: {{ post.createdAt|date('Y-m-d') }} by <strong>{{ post.author.pseudo }}</strong></small>
+                <small>Published on: {{ post.createdAt|date('Y-m-d H:i') }} by <strong>{{ post.author.pseudo }}</strong></small>
             </p>
         </div>
     </div>
 
     <h3 class="mt-4">Comments ({{ post.comments|length }})</h3>
 
-    {% for comment in post.comments %}
+    {% set sorted_comments = post.comments|sort((comment) => -comment.createdAt|date('U')) %}
+
+    {% for comment in sorted_comments %}
         <div class="card mt-3">
             <div class="card-body">
                 <h5 class="card-title">{{ comment.author.pseudo }}</h5>
                 <p class="card-text">{{ comment.content }}</p>
                 <p class="text-muted">
-                    <small>Posted on: {{ comment.createdAt|date('Y-m-d') }}</small>
+                    <small>Posted on: {{ comment.createdAt|date('Y-m-d H:i') }}</small>
                 </p>
 
                 {% if app.user and is_granted('COMMENT_DELETE', comment) %}
