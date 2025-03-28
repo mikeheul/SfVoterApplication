@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }} - Post Details{% endblock %}
+
+{% block body %}
+
+<div class="container mt-4">
+    <a href="{{ path('app_post') }}" class="btn btn-secondary mb-3">← Back to posts</a>
+
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">{{ post.title }}</h1>
+            <p class="card-text">{{ post.content }}</p>
+            <p class="text-muted">
+                <small>Published on: {{ post.createdAt|date('Y-m-d') }} by <strong>{{ post.author.pseudo }}</strong></small>
+            </p>
+        </div>
+    </div>
+
+    <h3 class="mt-4">Comments ({{ post.comments|length }})</h3>
+
+    {% for comment in post.comments %}
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ comment.author.pseudo }}</h5>
+                <p class="card-text">{{ comment.content }}</p>
+                <p class="text-muted">
+                    <small>Posted on: {{ comment.createdAt|date('Y-m-d') }}</small>
+                </p>
+
+                {% if app.user and is_granted('COMMENT_DELETE', comment) %}
+                    <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <p class="text-muted">No comments yet. Be the first to comment!</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

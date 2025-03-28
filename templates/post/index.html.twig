@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Posts{% endblock %}
+
+{% block body %}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Posts</h1>
+
+    {% if posts is empty %}
+        <p class="text-muted">No posts available.</p>
+    {% else %}
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ post.title }}</h2>
+                            <p class="card-text">{{ post.content|length > 150 ? post.content|slice(0, 150) ~ '...' : post.content }}</p>
+                            <p class="text-muted">
+                                <small>Published on: {{ post.createdAt|date('Y-m-d') }} by <strong>{{ post.author.pseudo }}</strong></small>
+                            </p>
+
+                            <a href="{{ path('show_post', {'id': post.id}) }}" class="btn btn-primary btn-sm">Show</a>
+
+                            {% if app.user and is_granted('POST_EDIT', post) %}
+                                <a href="#" class="btn btn-warning btn-sm">Edit</a>
+                            {% endif %}
+                            {% if app.user and is_granted('POST_DELETE', post) %}
+                                <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
