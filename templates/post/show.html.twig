@@ -12,7 +12,7 @@
             <h1 class="card-title">{{ post.title }}</h1>
             <p class="card-text">{{ post.content }}</p>
             <p class="text-muted">
-                <small>Published on: {{ post.createdAt|date('Y-m-d H:i') }} by <strong>{{ post.author.pseudo }}</strong></small>
+                <small>Published on : {{ post.createdAt|date('Y-m-d H:i') }} by <strong>{{ post.author.pseudo }}</strong></small>
             </p>
         </div>
     </div>
@@ -36,7 +36,7 @@
             </div>
         </div>
     {% else %}
-        <p class="text-muted">No comments yet. Be the first to comment!</p>
+        <p class="text-muted">No comments yet. Be the first to comment !</p>
     {% endfor %}
 </div>
 

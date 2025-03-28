@@ -18,7 +18,7 @@
                             <h2 class="card-title">{{ post.title }}</h2>
                             <p class="card-text">{{ post.content|length > 150 ? post.content|slice(0, 150) ~ '...' : post.content }}</p>
                             <p class="text-muted">
-                                <small>Published on: {{ post.createdAt|date('Y-m-d H:i') }} by <strong>{{ post.author.pseudo }}</strong></small>
+                                <small>Published on : {{ post.createdAt|date('Y-m-d H:i') }} by <strong>{{ post.author.pseudo }}</strong></small>
                             </p>
                             <p class="text-muted">
                                 <small>{{ post.comments | length }} comments</small>
