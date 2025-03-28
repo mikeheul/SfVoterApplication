@@ -20,6 +20,9 @@
                             <p class="text-muted">
                                 <small>Published on: {{ post.createdAt|date('Y-m-d') }} by <strong>{{ post.author.pseudo }}</strong></small>
                             </p>
+                            <p class="text-muted">
+                                <small>{{ post.comments | length }} comments</small>
+                            </p>
 
                             <a href="{{ path('show_post', {'id': post.id}) }}" class="btn btn-primary btn-sm">Show</a>
 
