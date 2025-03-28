@@ -13,34 +13,34 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create(); 
+        $faker = Factory::create('fr_FR'); 
 
         $users = [];
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $user = new User();
             $user->setPseudo($faker->userName)
-                ->setPassword($faker->password)
-                ->setEmail($faker->email);
+                ->setPassword($faker->password) 
+                ->setEmail($faker->safeEmail);
+
             $manager->persist($user);
-            $users[] = $user;
+            $users[] = $user; 
         }
 
-        // Créer 10 posts
         for ($i = 0; $i < 10; $i++) {
             $post = new Post();
-            $post->setTitle($faker->sentence(6)) 
-                ->setContent($faker->paragraph(4)) 
-                ->setCreatedAt($faker->dateTimeBetween('-1 year', 'now')) 
-                ->setAuthor($faker->randomElement($users));
+            $post->setTitle($faker->realText(50))  
+                ->setContent($faker->realText(200))  
+                ->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'))  
+                ->setAuthor($faker->randomElement($users));  
 
             $manager->persist($post);
 
             for ($j = 0; $j < rand(1, 5); $j++) { 
                 $comment = new Comment();
-                $comment->setContent($faker->paragraph(2)) 
+                $comment->setContent($faker->realText(100)) 
                         ->setCreatedAt($faker->dateTimeBetween($post->getCreatedAt(), 'now')) 
-                        ->setAuthor($faker->randomElement($users)) 
-                        ->setPost($post); 
+                        ->setAuthor($faker->randomElement($users))  
+                        ->setPost($post);  
 
                 $manager->persist($comment);
             }
